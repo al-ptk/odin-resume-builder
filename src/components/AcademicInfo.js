@@ -2,23 +2,34 @@ import { Component } from 'react';
 import AcademicInstance from './AcademicInstance';
 import uniqid from 'uniqid';
 
+const starterId = uniqid();
+
 export default class AcademicInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      courses: [],
+      courses: [<AcademicInstance key={starterId} uId={starterId} />],
     };
   }
+
+  addCourse = () => {
+    const newId = uniqid();
+    this.setState({
+      courses: this.state.courses.concat(
+        <AcademicInstance key={newId} uId={newId} />
+      ),
+    });
+  };
 
   render() {
     return (
       <div>
         <header className="category-header">
           <h2>Formações Acadêmicas</h2>
-          <button>+</button>
+          <button onClick={this.addCourse}>+</button>
         </header>
         <hr />
-        <AcademicInstance uId={uniqid()} />
+        {this.state.courses}
       </div>
     );
   }
