@@ -1,37 +1,52 @@
 import { Component } from 'react';
+import uniqid from 'uniqid';
+import ProfessionalInstance from './ProfessionalInstance';
+
+const starterId = uniqid();
 
 export default class ProfessionalExp extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      jobs: [],
-      job: {
-        name: '',
-        company: '',
-        startDate: '',
-        onGoing: false,
-        finishDate: '',
-      },
+      jobs: [
+        <ProfessionalInstance
+          key={starterId}
+          uId={starterId}
+          deleteJob={this.deleteJob}
+        />,
+      ],
     };
+    this.deleteJob = this.deleteJob.bind(this);
   }
+
+  addJob = () => {
+    const newId = uniqid();
+    this.setState({
+      jobs: this.state.jobs.concat(
+        <ProfessionalInstance
+          key={newId}
+          uId={newId}
+          deleteCourse={this.deleteJob}
+        />
+      ),
+    });
+  };
+
+  deleteJob = (id) => {
+    this.setState({
+      jobs: this.state.jobs.filter((elem) => elem.key !== id),
+    });
+  };
 
   render() {
     return (
       <div>
         <header className="category-header">
           <h2>Experiências Profissionais</h2>
-          <button>+</button>
+          <button onClick={this.addJob}>+</button>
         </header>
         <hr />
-        <form className="input-field">
-          <input type="text" id="job1-company" placeholder="Empresa" />
-          <input type="text" id="job1-position" placeholder="Cargo" />
-          <input type="date" id="job1-start" placeholder="Data de Início" />
-          <input type="checkbox" id="job1-isFinished" />
-          <label htmlFor="job1-isFinished">Em progresso?</label>
-          <input type="date" id="job1-finish" placeholder="Data de Término" />
-        </form>
+        {this.state.jobs}
       </div>
     );
   }
