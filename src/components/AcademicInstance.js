@@ -20,13 +20,20 @@ export default class AcademicInstance extends Component {
     if (value === 'on') {
       value = e.target.checked;
     }
-    this.setState(Object.fromEntries([[attr, value]]), console.log(this.state));
+    this.setState(Object.fromEntries([[attr, value]]));
   };
 
   render() {
     return (
       <div>
         <form className="input-field">
+          <button
+            type="button"
+            className="delete-button"
+            onClick={() => this.props.deleteCourse(this.id)}
+          >
+            Delete
+          </button>
           <input
             onChange={this.updateInput}
             type="text"

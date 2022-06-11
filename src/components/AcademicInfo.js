@@ -8,16 +8,33 @@ export default class AcademicInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      courses: [<AcademicInstance key={starterId} uId={starterId} />],
+      courses: [
+        <AcademicInstance
+          key={starterId}
+          uId={starterId}
+          deleteCourse={this.deleteCourse}
+        />,
+      ],
     };
+    this.deleteCourse = this.deleteCourse.bind(this);
   }
 
   addCourse = () => {
     const newId = uniqid();
     this.setState({
       courses: this.state.courses.concat(
-        <AcademicInstance key={newId} uId={newId} />
+        <AcademicInstance
+          key={newId}
+          uId={newId}
+          deleteCourse={this.deleteCourse}
+        />
       ),
+    });
+  };
+
+  deleteCourse = (id) => {
+    this.setState({
+      courses: this.state.courses.filter((elem) => elem.key !== id),
     });
   };
 
