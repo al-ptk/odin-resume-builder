@@ -1,4 +1,4 @@
-# (odin-)resume-builer
+# odin-resume-builer
 
 [**>>> See it live. <<<**](https://al-ptk.github.io/resume-builder/)
 
